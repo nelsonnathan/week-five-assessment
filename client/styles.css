@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+}
+
+.buttons {
+    display: flex;
+    align-content: space-around;
+}
+
+.dropdown {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.favoriteQuotes {
+    display: flex;
+    justify-content: baseline;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

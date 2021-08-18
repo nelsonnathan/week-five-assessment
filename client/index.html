@@ -2,29 +2,34 @@
 <html>
   <head>
     <title>Back End Assessment</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body class="container">
-    <button id="complimentButton">Get a compliment</button>
-    <button id="fortuneButton">Delicious fortune cookie</button>
-    <button id="inspirationSpitter">A little pick me up</button>
+    <div class="buttons">
+      <button id="complimentButton">Get a compliment</button>
+      <button id="fortuneButton">Delicious fortune cookie</button>
+      <button id="inspirationSpitter">A little pick me up</button>
+    </div>
 
+    <div class="dropdown">
+      <form method="POST" action="/api/pick" id="quoteForm">
+      <label for="quotes">Pick your favorite quote:</label>
+      <select name="quotes" id="quotes">
+        <option></option>
+        <option value="Teddy">“Do what you can, with what you have, where you are.” 
+          ― Theodore Roosevelt</option>
+        <option value="Paulo">“It's the possibility of having a dream come true that makes life interesting.” 
+          ― Paulo Coelho</option>
+        <option value="Doctor">“A person's a person, no matter how small.” 
+          ― Dr. Seuss</option>
+        <option value="Audrey">“Nothing is impossible, the word itself says 'I'm possible'!” 
+          ― Audrey Hepburn</option>
+      </select>
+      <button id="quoteSubmit" type="submit" form="quoteForm" value="Submit">Submit</button>
+      </form>
+    </div>
 
-    <form method="GET" action="/api/pick" id="quoteForm">
-    <label for="quotes">Pick your favorite quote:</label>
-    <select name="quotes" id="quotes">
-      <option></option>
-      <option>“Do what you can, with what you have, where you are.” 
-        ― Theodore Roosevelt</option>
-      <option>“It's the possibility of having a dream come true that makes life interesting.” 
-        ― Paulo Coelho</option>
-      <option>“A person's a person, no matter how small.” 
-        ― Dr. Seuss</option>
-      <option>“Nothing is impossible, the word itself says 'I'm possible'!” 
-        ― Audrey Hepburn</option>
-    </select>
-    </form>
-
-    <button id="quoteSubmit" type="submit" form="quoteForm" value="Submit">Submit</button>
+    <div class="favoriteQuotes" id="quoteSelect"></div>
     
 
     
@@ -54,11 +59,18 @@
           })
       }
 
-      document.getElementById("quoteSubmit").onclick = function () {
-        axios.get("http://localhost:4000/api/pick")
+      document.getElementById("quoteSubmit").onclick = function (event) {
+        event.preventDefault()
+        let body = {
+        sweetQuote: document.querySelector('#quotes').value
+        }
+        let fQuote = document.createElement('P')
+        axios.post("http://localhost:4000/api/pick", body)
           .then(res => {
-            const data = res.data
-            alert("Your favorite quote: " + data)
+            let data = res.data
+            let fQuoteText = document.createTextNode(data)
+            fQuote.appendChild(fQuoteText)
+            document.getElementById("quoteSelect").appendChild(fQuote)          
           })
       }
 
